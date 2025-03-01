@@ -2,12 +2,7 @@
   "manifest_version": 3,
   "name": "DeepSeek Assistant",
   "version": "1.0",
-  "permissions": [
-    "contextMenus",
-    "activeTab",
-    "scripting",
-    "storage"
-  ],
+  "permissions": ["contextMenus", "tabs", "activeTab", "scripting", "storage"],
   "background": {
     "service_worker": "background.js"
   },
@@ -19,5 +14,12 @@
       "128": "images/icon128.png"
     }
   },
-  "host_permissions": ["http://*/*", "https://*/*"]
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"]
 }

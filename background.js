@@ -69,6 +69,9 @@ function streamFetch(apiUrl, token, model, prompt) {
                                 const content = jsonData.choices[0].delta.content;
                                 if (content) {
                                     console.log(content);
+                                    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                                        chrome.tabs.sendMessage(tabs[0].id, { action: "streamText", text: content });
+                                    });
                                 }
                             }
                         } catch (e) {
@@ -97,6 +100,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         console.log("API URL:", apiUrl);
         console.log("Token:", token);
         console.log("Selected Text:", selectedText);
+
+        if (!apiUrl || !token || !model) {
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id, { action: "showConfigWarning", text: "请先配置API URL、Token和模型！" });
+            });
+            return; // 阻止后续执行
+        }
 
         if (info.menuItemId === "translate") {
             streamFetch(apiUrl, token, model, "翻译以下内容为英文：" + selectedText);

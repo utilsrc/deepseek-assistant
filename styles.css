@@ -1,0 +1,40 @@
+#chat-popup {
+    position: fixed;
+    width: 350px;
+    height: 400px;
+    bottom: 50px;
+    right: 50px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    z-index: 10000;
+}
+
+#chat-header {
+    background: #0078D4;
+    color: white;
+    padding: 10px;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#chat-content {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.5;
+}
