@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            width: 500px;
+        }
+        #settings {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        #result {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="settings">
+        <h3>设置</h3>
+        <form>
+            <label for="apiUrl">API 地址:</label>
+            <input type="text" id="apiUrl" placeholder="https://wishub-x1.ctyun.cn/v1/chat/completions"><br>
+            <label for="token">Token:</label>
+            <input type="text" id="token" placeholder="你的Token"><br>
+            <label for="model">模型:</label>
+            <input type="text" id="model" placeholder="模型ID"><br>
+            <button id="saveSettings">保存设置</button>
+        </form>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
