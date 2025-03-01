@@ -43,6 +43,8 @@ function makeDraggable(popup) {
     });
 }
 
+let markdownBuffer = ""; // 全局存储 Markdown 语法文本
+
 // 流式更新弹框内容
 function appendToPopup(text) {
     let contentDiv = document.getElementById("chat-content");
@@ -57,7 +59,8 @@ function appendToPopup(text) {
     let index = 0;
     function typeText() {
         if (index < text.length) {
-            span.innerHTML += text[index++];
+            markdownBuffer += text[index++]; // 追加到 Markdown 缓冲区
+            contentDiv.innerHTML = marked.parse(markdownBuffer); // 解析 Markdown
             contentDiv.scrollTop = contentDiv.scrollHeight; // 滚动到底部
             setTimeout(typeText, 50);
         }
