@@ -1,7 +1,7 @@
 #chat-popup {
     position: fixed;
     width: 350px;
-    height: 400px;
+    height: 200px;
     bottom: 50px;
     right: 50px;
     background: white;
@@ -11,6 +11,7 @@
     flex-direction: column;
     font-family: Arial, sans-serif;
     z-index: 10000;
+    transition: height 0.5s ease; /* 添加高度变化的过渡效果 */
 }
 
 #chat-header {

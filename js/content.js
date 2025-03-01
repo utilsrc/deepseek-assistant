@@ -13,6 +13,7 @@ function createPopup() {
 
     // 关闭按钮功能
     document.getElementById("chat-close").addEventListener("click", () => {
+        markdownBuffer = "";
         popup.remove();
     });
 
@@ -57,11 +58,37 @@ function appendToPopup(text) {
     contentDiv.appendChild(span);
 
     let index = 0;
+    let currentHeight = 200; // 缓存当前高度，初始值为 200px
+
     function typeText() {
         if (index < text.length) {
             markdownBuffer += text[index++]; // 追加到 Markdown 缓冲区
             contentDiv.innerHTML = marked.parse(markdownBuffer); // 解析 Markdown
             contentDiv.scrollTop = contentDiv.scrollHeight; // 滚动到底部
+
+            // 动态调整弹框高度
+            const maxHeight = window.innerHeight * 0.7;
+            const contentHeight = contentDiv.scrollHeight;
+
+            let newHeight = 200; // 初始高度
+            if (contentHeight > 180 && contentHeight <= 300 && currentHeight < maxHeight) {
+                newHeight = 300;
+            } else if (contentHeight > 300 && contentHeight <= 400 && currentHeight < maxHeight) {
+                newHeight = 400;
+            } else if (contentHeight > 400 && contentHeight <= 500 && currentHeight < maxHeight) {
+                newHeight = 500;
+            } else if (contentHeight > 500 && contentHeight <= 600 && currentHeight < maxHeight) {
+                newHeight = 600;
+            } else if (contentHeight > 600 && currentHeight < maxHeight) {
+                newHeight = maxHeight;
+            }
+
+            // 如果高度需要更新
+            if (newHeight !== currentHeight) {
+                document.getElementById("chat-popup").style.height = `${newHeight}px`;
+                currentHeight = newHeight; // 更新缓存的高度
+            }
+
             setTimeout(typeText, 50);
         }
     }
@@ -105,4 +132,4 @@ function showConfigWarning() {
     }, 3000);
 }
 
-console.log("Content script loaded");
+console.log("DeepSeek Assistant is working!");
