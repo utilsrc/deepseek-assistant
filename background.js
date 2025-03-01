@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 
     chrome.contextMenus.create({
-        id: "explainToEnglish",
+        id: "translateToEnglish",
         parentId: "DeepSeekAssistant",
         title: "解释为英文",
         contexts: ["selection"]
@@ -116,11 +116,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         }
 
         if (info.menuItemId === "translateToChinese") {
-            streamFetch(apiUrl, token, model, "直接翻译为中文：" + selectedText);
+            streamFetch(apiUrl, token, model, "直接翻译为中文:" + selectedText);
         } else if (info.menuItemId === "translateToEnglish") {
-            streamFetch(apiUrl, token, model, "直接翻译为英文：" + selectedText);
+            streamFetch(apiUrl, token, model, "直接翻译为英文:" + selectedText);
         }else if (info.menuItemId === "explain") {
-            streamFetch(apiUrl, token, model, "解释这个内容：" + selectedText);
+            streamFetch(apiUrl, token, model, "用最简单和容易理解的方式解释这个内容:" + selectedText);
         }
     });
 });
