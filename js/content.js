@@ -1,10 +1,10 @@
 // 创建弹框
-function createPopup() {
+function createPopup () {
     // 获取用户选择的文本位置
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
-    
+
     // 创建弹框
     let popup = document.createElement("div");
     popup.id = "chat-popup";
@@ -15,18 +15,26 @@ function createPopup() {
         </div>
         <div id="chat-content"></div>
     `;
-    
+
     // 设置弹框初始位置
     popup.style.position = "absolute";
     popup.style.left = `${rect.left + window.scrollX}px`;
     popup.style.top = `${rect.bottom + window.scrollY + 10}px`;
-    
+
     document.body.appendChild(popup);
 
     // 关闭按钮功能
-    document.getElementById("chat-close").addEventListener("click", () => {
+    document.getElementById("chat-close").addEventListener("click", async () => {
         markdownBuffer = "";
         popup.remove();
+
+        await chrome.runtime.sendMessage({ action: "abortStream" }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error("Error sending message:", chrome.runtime.lastError);
+            } else {
+                console.log("Message sent successfully: ", response);
+            }
+        });
     });
 
     // 让弹框可拖动
@@ -34,7 +42,7 @@ function createPopup() {
 }
 
 // 让弹框可拖动
-function makeDraggable(popup) {
+function makeDraggable (popup) {
     let header = document.getElementById("chat-header");
     let offsetX, offsetY, isDragging = false;
 
@@ -59,7 +67,7 @@ function makeDraggable(popup) {
 let markdownBuffer = ""; // 全局存储 Markdown 语法文本
 
 // 流式更新弹框内容
-function appendToPopup(text) {
+function appendToPopup (text) {
     let contentDiv = document.getElementById("chat-content");
     if (!contentDiv) {
         createPopup();
@@ -72,7 +80,7 @@ function appendToPopup(text) {
     let index = 0;
     let currentHeight = 200; // 缓存当前高度，初始值为 200px
 
-    function typeText() {
+    function typeText () {
         if (index < text.length) {
             markdownBuffer += text[index++]; // 追加到 Markdown 缓冲区
             contentDiv.innerHTML = marked.parse(markdownBuffer); // 解析 Markdown
@@ -81,10 +89,10 @@ function appendToPopup(text) {
             // 动态调整弹框高度
             const maxHeight = window.innerHeight * 0.7;
             const contentHeight = contentDiv.scrollHeight;
-            
+
             // 计算新高度
             let newHeight = Math.min(Math.max(contentHeight + 20, 200), maxHeight);
-            
+
             // 如果高度需要更新
             if (newHeight !== currentHeight) {
                 document.getElementById("chat-popup").style.transition = "height 0.3s ease";
@@ -109,7 +117,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-function showConfigWarning() {
+function showConfigWarning () {
     // 如果已存在提示框，则不重复创建
     if (document.getElementById("config-warning")) return;
 
