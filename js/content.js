@@ -81,27 +81,18 @@ function appendToPopup(text) {
             // 动态调整弹框高度
             const maxHeight = window.innerHeight * 0.7;
             const contentHeight = contentDiv.scrollHeight;
-
-            let newHeight = 200; // 初始高度
-            if (contentHeight > 180 && contentHeight <= 300 && currentHeight < maxHeight) {
-                newHeight = 300;
-            } else if (contentHeight > 300 && contentHeight <= 400 && currentHeight < maxHeight) {
-                newHeight = 400;
-            } else if (contentHeight > 400 && contentHeight <= 500 && currentHeight < maxHeight) {
-                newHeight = 500;
-            } else if (contentHeight > 500 && contentHeight <= 600 && currentHeight < maxHeight) {
-                newHeight = 600;
-            } else if (contentHeight > 600 && currentHeight < maxHeight) {
-                newHeight = maxHeight;
-            }
-
+            
+            // 计算新高度
+            let newHeight = Math.min(Math.max(contentHeight + 20, 200), maxHeight);
+            
             // 如果高度需要更新
             if (newHeight !== currentHeight) {
+                document.getElementById("chat-popup").style.transition = "height 0.3s ease";
                 document.getElementById("chat-popup").style.height = `${newHeight}px`;
-                currentHeight = newHeight; // 更新缓存的高度
+                currentHeight = newHeight;
             }
 
-            setTimeout(typeText, 50);
+            requestAnimationFrame(typeText);
         }
     }
     typeText();
