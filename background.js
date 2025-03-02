@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: "translateToEnglish",
         parentId: "DeepSeekAssistant",
-        title: "解释为英文",
+        title: "翻译为英文",
         contexts: ["selection"]
     });
 
