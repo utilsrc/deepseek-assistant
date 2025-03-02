@@ -1,5 +1,11 @@
 // 创建弹框
 function createPopup() {
+    // 获取用户选择的文本位置
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    
+    // 创建弹框
     let popup = document.createElement("div");
     popup.id = "chat-popup";
     popup.innerHTML = `
@@ -9,6 +15,12 @@ function createPopup() {
         </div>
         <div id="chat-content"></div>
     `;
+    
+    // 设置弹框初始位置
+    popup.style.position = "absolute";
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    popup.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    
     document.body.appendChild(popup);
 
     // 关闭按钮功能
