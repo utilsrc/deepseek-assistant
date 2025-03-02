@@ -1,6 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "DeepSeek Assistant",
+  "name": "DeepSeek网页助手",
+  "description": "还在为网页上晦涩难懂的术语头疼？ DeepSeek 网页助手来帮你！",
+  "homepage_url": "https://github.com/utilsrc/deepseek-assistant",
   "version": "1.0",
   "permissions": ["contextMenus", "tabs", "activeTab", "scripting", "storage"],
   "background": {
